@@ -12,4 +12,5 @@
     <color name="grey_light">#ececec</color>
     <color name="grey">#aaaaaa</color>
     <color name="half_gray">#80000000</color>
+    <color name="separator">#999</color>
 </resources>

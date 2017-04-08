@@ -30,7 +30,7 @@ public class TripResultActivity extends ToolbarActivity {
     private RecyclerView mFlightsRv;
     private Trip mTripDetails;
     private RoutesAdapter mAdapter;
-    private TextView mToandFromTv, mResultCountTv, mSummaryTv;
+    private TextView mToandFromTv, mResultCountTv, mSummaryTv, mHotelTv, mRecommendTv;
 
     @Override
     protected int getLayoutResId() {
@@ -48,6 +48,36 @@ public class TripResultActivity extends ToolbarActivity {
         setToolbarTitle("Trip _Planner");
         initList();
         initTripData();
+        initRecomend();
+        initHotels();
+    }
+
+    private void initRecomend() {
+        mRecommendTv = (TextView) findViewById(R.id.tv_recommend);
+        mRecommendTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onRecommendCliced();
+            }
+        });
+    }
+
+    private void onRecommendCliced() {
+
+    }
+
+    private void initHotels() {
+        mHotelTv = (TextView) findViewById(R.id.tv_hotels);
+        mHotelTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onHotelsCliced();
+            }
+        });
+    }
+
+    private void onHotelsCliced() {
+
     }
 
     private void initTripData() {

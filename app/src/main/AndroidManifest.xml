@@ -29,6 +29,14 @@
             android:name=".ui.activity.TripResultActivity"
             android:screenOrientation="portrait"
             android:theme="@style/SplashTheme" />
+        <activity
+            android:name=".ui.activity.TripResultActivity"
+        <activity
+            android:name=".ui.activity.WebViewActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.NoActionBarTheme">
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme" />
 
         <activity
             android:name=".ui.activity.RouteDetailActivity"
