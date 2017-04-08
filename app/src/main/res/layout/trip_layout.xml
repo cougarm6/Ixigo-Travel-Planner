@@ -22,6 +22,7 @@
     android:textColor="@color/black"
     android:layout_height="wrap_content" />
     <Button
+        android:id="@+id/bt_open_city"
         android:layout_width="match_parent"
         android:text="Let's Plan the Trip"
         android:layout_marginTop="10dp"
