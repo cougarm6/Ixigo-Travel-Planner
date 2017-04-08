@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import com.kungfupandas.ixigotripplanner.AppConstants;
 import com.kungfupandas.ixigotripplanner.listener.NetworkOperationListener;
 import com.kungfupandas.ixigotripplanner.network.AsyncManager;
 import com.kungfupandas.ixigotripplanner.pojo.NetworkResponse;
@@ -32,7 +33,18 @@ public abstract class BaseActivity extends AppCompatActivity implements NetworkO
 
     @Override
     public void onPreNetworkOperation(int networkTaskCode) {
-        showDialog(this,"Please wait!");
+        if (shouldShowDialogForNetworkCall(networkTaskCode))
+            showDialog(this, "Please wait!");
+    }
+
+    private boolean shouldShowDialogForNetworkCall(int networkTaskCode) {
+        switch (networkTaskCode){
+            case AppConstants.NetworkTaskCodes.GET_AUTOCOMPLETE_CITY_ORIGIN:
+                return false;
+            case AppConstants.NetworkTaskCodes.GET_AUTOCOMPLETE_CITY_DESTINATION:
+                return false;
+        }
+        return true;
     }
 
     @Override

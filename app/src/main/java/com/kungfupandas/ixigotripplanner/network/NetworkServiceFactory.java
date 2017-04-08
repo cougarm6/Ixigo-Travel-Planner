@@ -10,7 +10,9 @@ public class NetworkServiceFactory {
 
     public static NetworkService getInstance(int taskCode) {
         switch (taskCode) {
-            case AppConstants.NetworkTaskCodes.GET_AUTOCOMPLETE_CITY:
+            case AppConstants.NetworkTaskCodes.GET_AUTOCOMPLETE_CITY_ORIGIN:
+                return new GetAutocompleteCityImpl();
+            case AppConstants.NetworkTaskCodes.GET_AUTOCOMPLETE_CITY_DESTINATION:
                 return new GetAutocompleteCityImpl();
             default:
                 return null;
