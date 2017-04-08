@@ -150,6 +150,6 @@ public class TripResultActivity extends ToolbarActivity {
     }
 
     private void setLastKnownLocation(City mOriginCity) {
-        //TODO: write last known location code
+
     }
 }

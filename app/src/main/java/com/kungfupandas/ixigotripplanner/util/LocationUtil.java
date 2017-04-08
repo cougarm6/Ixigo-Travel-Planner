@@ -75,10 +75,10 @@ public interface LocationUtilCallback{
         if (!mGoogleApiClient.isConnected() && mLastLocation!=null) {
             return mLastLocation;
         } else {
-            //if (!PermissionManager.isPermissionRequestRequired(mContext, Manifest.permission.ACCESS_FINE_LOCATION)){
+            if (!PermissionManager.isPermissionRequestRequired(mContext, Manifest.permission.ACCESS_FINE_LOCATION)){
                 mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                         mGoogleApiClient);
-            //}
+            }
             return mLastLocation;
         }
     }
@@ -88,10 +88,10 @@ public interface LocationUtilCallback{
         if(mGoogleApiClient==null || !mGoogleApiClient.isConnected()){
             return;
         }
-        //if (!PermissionManager.isPermissionRequestRequired(mContext, Manifest.permission.ACCESS_FINE_LOCATION)) {
+        if (!PermissionManager.isPermissionRequestRequired(mContext, Manifest.permission.ACCESS_FINE_LOCATION)) {
             mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
                     mGoogleApiClient);
-        //}
+        }
 
         /**
          * Location is needed only once and last location is not null then send the last location

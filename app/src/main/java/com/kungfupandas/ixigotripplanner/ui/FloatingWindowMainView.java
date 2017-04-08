@@ -1,6 +1,7 @@
 package com.kungfupandas.ixigotripplanner.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.kungfupandas.ixigotripplanner.R;
 import com.kungfupandas.ixigotripplanner.pojo.City;
+import com.kungfupandas.ixigotripplanner.ui.activity.TripResultActivity;
 
 /**
  * Created by aish on 8/4/17.
@@ -50,7 +52,9 @@ public class FloatingWindowMainView extends CardView {
         openTripActivity.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(getContext(), TripResultActivity.class);
+                intent.putExtra(TripResultActivity.BUNDLE_KEY_DESTINATION_CITY,city);
+                getContext().startActivity(intent);
             }
         });
     }
