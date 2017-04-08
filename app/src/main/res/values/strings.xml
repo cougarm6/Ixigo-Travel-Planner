@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Ixigo Trip Planner</string>
+    <string name="font_handwritten">barley.ttf</string>
+    <string name="home_heading">Travel Planner</string>
+    <string name="home_subheading">with love by _Ixigo</string>
+    <string name="font_light">RobotoCondensed-Light.ttf</string>
+    <string name="search">Search</string>
+</resources>
