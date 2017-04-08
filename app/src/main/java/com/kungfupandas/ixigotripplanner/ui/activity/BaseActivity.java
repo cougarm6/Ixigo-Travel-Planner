@@ -92,7 +92,7 @@ public abstract class BaseActivity extends AppCompatActivity implements NetworkO
 
     @Override
     public void onGetLocation(Location location) {
-        
+
     }
 
     @Override
