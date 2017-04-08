@@ -17,4 +17,7 @@ public class AppConstants {
         public static final long WRITE_TIMEOUT = 10;
         public static final long READ_TIMEOUT = 10;
     }
+    public static class IntentConfigs{
+        public static final String WORDS_LIST = "words_list";
+    }
 }
