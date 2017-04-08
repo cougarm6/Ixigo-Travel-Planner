@@ -50,7 +50,7 @@ public class FloatingWindowMainView extends CardView {
         openTripActivity.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+
             }
         });
     }
