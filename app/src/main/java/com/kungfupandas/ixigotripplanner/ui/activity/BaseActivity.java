@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import com.kungfupandas.ixigotripplanner.AppConstants;
 import com.kungfupandas.ixigotripplanner.listener.NetworkOperationListener;
@@ -23,6 +24,10 @@ public abstract class BaseActivity extends AppCompatActivity implements NetworkO
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResId());
+    }
+
+    public void showMessage(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show();
     }
 
     protected abstract int getLayoutResId();

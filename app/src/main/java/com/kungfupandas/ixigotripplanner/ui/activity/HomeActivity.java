@@ -6,6 +6,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -14,7 +15,6 @@ import android.widget.Toast;
 import com.kungfupandas.ixigotripplanner.AppConstants;
 import com.kungfupandas.ixigotripplanner.R;
 import com.kungfupandas.ixigotripplanner.pojo.City;
-import com.kungfupandas.ixigotripplanner.pojo.CitySearch;
 import com.kungfupandas.ixigotripplanner.pojo.NetworkResponse;
 import com.kungfupandas.ixigotripplanner.ui.presenter.HomePresenter;
 
@@ -27,6 +27,7 @@ public class HomeActivity extends BaseActivity implements HomePresenter.View {
     private HomePresenter mPresenter;
     private ArrayAdapter<String> mOriginCityAdapter, mDestinationCityAdapter;
     private List<City> mOrginCitySearch, mDestinationCitySearch;
+    private City mOriginCity, mDestinationCity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +52,17 @@ public class HomeActivity extends BaseActivity implements HomePresenter.View {
         mSearchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                executeNetworkOperation(AppConstants.NetworkTaskCodes.GET_A, AppConstants.ApiEndpoints.GET_AUTOCOMPLETE_CITY);
+                if(mOriginCity!=null && mDestinationCity!=null){
+                    Intent intent = new Intent(HomeActivity.this, TripResultActivity.class);
+                    intent.putExtra(TripResultActivity.BUNDLE_KEY_ORIGIN_CITY, mOriginCity);
+                    intent.putExtra(TripResultActivity.BUNDLE_KEY_DESTINATION_CITY, mDestinationCity);
+                    startActivity(intent);
+                }else{
+                    if(mOriginCity == null)
+                    showMessage("Please select an Origin City!");
+                    else
+                        showMessage("Please select a Destination City!");
+                }
             }
         });
     }
@@ -59,11 +70,41 @@ public class HomeActivity extends BaseActivity implements HomePresenter.View {
     private void initFromCityView() {
         mOriginCityActv = (AutoCompleteTextView) findViewById(R.id.autocomplete_from);
         mOriginCityActv.addTextChangedListener(mOriginCityTextChangeListener);
+        mOriginCityActv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+               setOriginCity((String) adapterView.getAdapter().getItem(i));
+            }
+        });
+    }
+
+    private void setOriginCity(String cityName) {
+        for(City city : mOrginCitySearch){
+            if(cityName.equalsIgnoreCase(cityName)){
+                mOriginCity = city;
+                break;
+            }
+        }
+    }
+
+    private void setDestinationCity(String cityName) {
+        for(City city : mDestinationCitySearch){
+            if(cityName.equalsIgnoreCase(cityName)){
+                mDestinationCity = city;
+                break;
+            }
+        }
     }
 
     private void initDestinationCityView() {
         mDestinationActv = (AutoCompleteTextView) findViewById(R.id.autocomplete_destination);
         mDestinationActv.addTextChangedListener(mDestinationCityTextChangeListener);
+        mDestinationActv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                setDestinationCity((String) adapterView.getAdapter().getItem(i));
+            }
+        });
     }
 
     @Override
