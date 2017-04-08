@@ -5,6 +5,7 @@
     xmlns:font="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/cv_route"
     android:layout_marginLeft="@dimen/route_list_card_margin"
     android:layout_marginRight="@dimen/route_list_card_margin"
     android:layout_marginTop="@dimen/route_list_card_margin_top"

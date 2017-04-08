@@ -43,4 +43,5 @@ dependencies {
     compile 'net.danlew:android.joda:2.9.1'
     compile 'com.pkmmte.view:circularimageview:1.1'
     compile 'net.bohush.geometricprogressview:geometricprogressview:1.1.1'
+    compile 'com.github.vipulasri:timelineview:1.0.5'
 }

@@ -1,12 +1,16 @@
 package com.kungfupandas.ixigotripplanner.pojo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by tushar on 08/04/17.
  */
 
-public class Trip {
+public class Trip implements Parcelable {
     private String originName;
     private String destinationName;
     private boolean noModesPossible;
@@ -124,4 +128,59 @@ public class Trip {
     public void setRoutes(List<Route> routes) {
         this.routes = routes;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.originName);
+        dest.writeString(this.destinationName);
+        dest.writeByte(this.noModesPossible ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.multiModes ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.directFlight ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.directBus ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.directCar ? (byte) 1 : (byte) 0);
+        dest.writeByte(this.direct ? (byte) 1 : (byte) 0);
+        dest.writeString(this.directIndirectSentence);
+        dest.writeString(this.distance);
+        dest.writeList(this.routes);
+        dest.writeParcelable(this.fastestRoute, flags);
+        dest.writeParcelable(this.cheapestRoute, flags);
+    }
+
+    public Trip() {
+    }
+
+    protected Trip(Parcel in) {
+        this.originName = in.readString();
+        this.destinationName = in.readString();
+        this.noModesPossible = in.readByte() != 0;
+        this.multiModes = in.readByte() != 0;
+        this.directFlight = in.readByte() != 0;
+        this.directBus = in.readByte() != 0;
+        this.directCar = in.readByte() != 0;
+        this.direct = in.readByte() != 0;
+        this.directIndirectSentence = in.readString();
+        this.distance = in.readString();
+        this.routes = new ArrayList<Route>();
+        in.readList(this.routes, Route.class.getClassLoader());
+        this.fastestRoute = in.readParcelable(Route.class.getClassLoader());
+        this.cheapestRoute = in.readParcelable(Route.class.getClassLoader());
+    }
+
+    public static final Parcelable.Creator<Trip> CREATOR = new Parcelable.Creator<Trip>() {
+        @Override
+        public Trip createFromParcel(Parcel source) {
+            return new Trip(source);
+        }
+
+        @Override
+        public Trip[] newArray(int size) {
+            return new Trip[size];
+        }
+    };
 }

@@ -92,9 +92,11 @@ public class TripResultActivity extends ToolbarActivity {
             mTripDetails = new Gson().fromJson(data.toString(), Trip.class);
             if(mTripDetails.getFastestRoute()!=null &&mTripDetails.getFastestRoute().getDurationPretty()!=null &&
                     mTripDetails.getCheapestRoute()!=null && mTripDetails.getCheapestRoute().getDurationPretty()!=null) {
-                mAdapter = new RoutesAdapter(mTripDetails.getRoutes(), mTripDetails.getFastestRoute().getDurationPretty(), mTripDetails.getCheapestRoute().getDurationPretty());
+                mAdapter = new RoutesAdapter(mTripDetails.getRoutes(),
+                        mTripDetails.getFastestRoute().getDurationPretty(),
+                        mTripDetails.getCheapestRoute().getDurationPretty(), this);
             }else{
-                mAdapter = new RoutesAdapter(mTripDetails.getRoutes(), "N/A", "N/A");
+                mAdapter = new RoutesAdapter(mTripDetails.getRoutes(), "N/A", "N/A", this);
             }
             mFlightsRv.setAdapter(mAdapter);
             setTripData();

@@ -1,5 +1,8 @@
 package com.kungfupandas.ixigotripplanner.adapter;
 
+import android.content.Context;
+import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +12,7 @@ import android.widget.TextView;
 
 import com.kungfupandas.ixigotripplanner.R;
 import com.kungfupandas.ixigotripplanner.pojo.Route;
+import com.kungfupandas.ixigotripplanner.ui.activity.RouteDetailActivity;
 
 import java.util.List;
 
@@ -17,6 +21,7 @@ import java.util.List;
  */
 
 public class RoutesAdapter extends RecyclerView.Adapter<RoutesAdapter.ViewHolder> {
+    private final Context mContext;
     private List<Route> routeList;
     private String mDurationFastest, mDurationCheapest;
 
@@ -27,6 +32,7 @@ public class RoutesAdapter extends RecyclerView.Adapter<RoutesAdapter.ViewHolder
         public TextView mModesTv;
         public ImageView mCheapIv;
         public ImageView mFastIv;
+        public CardView mCardView;
 
         public ViewHolder(View v) {
             super(v);
@@ -36,13 +42,15 @@ public class RoutesAdapter extends RecyclerView.Adapter<RoutesAdapter.ViewHolder
             mModesTv = (TextView) v.findViewById(R.id.tv_class);
             mCheapIv = (ImageView) v.findViewById(R.id.iv_cheap);
             mFastIv = (ImageView) v.findViewById(R.id.iv_fastest);
+            mCardView = (CardView) v.findViewById(R.id.cv_route);
         }
     }
 
-    public RoutesAdapter(List<Route> routeList, String durationFastest, String durationCheapest) {
+    public RoutesAdapter(List<Route> routeList, String durationFastest, String durationCheapest, Context context) {
         this.routeList = routeList;
         this.mDurationCheapest = durationCheapest;
         this.mDurationFastest = durationFastest;
+        this.mContext = context;
     }
 
     @Override
@@ -56,7 +64,15 @@ public class RoutesAdapter extends RecyclerView.Adapter<RoutesAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Route route = routeList.get(position);
+        final Route route = routeList.get(position);
+        holder.mCardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, RouteDetailActivity.class);
+                intent.putExtra(RouteDetailActivity.BUNDLE_KEYS_ROUTE, route);
+                mContext.startActivity(intent);
+            }
+        });
         holder.mPriceTv.setText("\u20B9 " + route.getPrice());
         holder.mSummaryTv.setText(route.getModeViaString());
         holder.mTimingTv.setText(route.getDurationPretty());
