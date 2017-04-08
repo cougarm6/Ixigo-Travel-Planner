@@ -16,6 +16,6 @@ public class GetAutocompleteCityImpl extends GenericNetworkService {
 
     @Override
     public NetworkResponse getData(Object... params) throws JSONException, SQLException, NullPointerException, IOException {
-        return doGet(AppConstants.ApiEndpoints.GET_AUTOCOMPLETE_CITY);
+        return doGet((String) params[0]);
     }
 }

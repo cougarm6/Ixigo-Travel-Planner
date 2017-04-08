@@ -6,20 +6,27 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.kungfupandas.ixigotripplanner.AppConstants;
 import com.kungfupandas.ixigotripplanner.R;
+import com.kungfupandas.ixigotripplanner.pojo.City;
+import com.kungfupandas.ixigotripplanner.pojo.CitySearch;
 import com.kungfupandas.ixigotripplanner.pojo.NetworkResponse;
 import com.kungfupandas.ixigotripplanner.ui.presenter.HomePresenter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class HomeActivity extends BaseActivity implements HomePresenter.View {
-    private AutoCompleteTextView mOriginCityActv;
-    private AutoCompleteTextView mDestinationActv;
+    private AutoCompleteTextView mOriginCityActv, mDestinationActv;
     private Button mSearchBtn;
     private HomePresenter mPresenter;
+    private ArrayAdapter<String> mOriginCityAdapter, mDestinationCityAdapter;
+    private List<City> mOrginCitySearch, mDestinationCitySearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +74,30 @@ public class HomeActivity extends BaseActivity implements HomePresenter.View {
     @Override
     public void showMessage(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void updateOriginCityResults(List<City> resultCityList) {
+        mOrginCitySearch = resultCityList;
+        List<String> list = new ArrayList<>();
+        for (City city : resultCityList) {
+            list.add(city.getCityName());
+        }
+        mOriginCityAdapter = new ArrayAdapter<>
+                (this, android.R.layout.simple_list_item_1, list);
+        mOriginCityActv.setAdapter(mOriginCityAdapter);
+    }
+
+    @Override
+    public void updateDestinationCityResults(List<City> resultCityList) {
+        mDestinationCitySearch = resultCityList;
+        List<String> list = new ArrayList<>();
+        for (City city : resultCityList) {
+            list.add(city.getCityName());
+        }
+        mDestinationCityAdapter = new ArrayAdapter<>
+                (this, android.R.layout.simple_list_item_1, list);
+        mDestinationActv.setAdapter(mDestinationCityAdapter);
     }
 
     @Override
