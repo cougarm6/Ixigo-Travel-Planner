@@ -179,6 +179,7 @@ public class FloatingView {
         if(mCrossView.getParent()!=null) {
             mWindowManager.removeView(mCrossView);
         }
+        FloatingWindowController.isCreatedOnce = false;
     }
 
     private void addLayoutChangeListener(final View view){

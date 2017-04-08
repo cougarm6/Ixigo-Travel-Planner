@@ -3,7 +3,10 @@ package com.kungfupandas.ixigotripplanner.ui.activity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -12,8 +15,18 @@ import android.widget.Toast;
 import com.kungfupandas.ixigotripplanner.AppConstants;
 import com.kungfupandas.ixigotripplanner.listener.NetworkOperationListener;
 import com.kungfupandas.ixigotripplanner.network.AsyncManager;
+import com.kungfupandas.ixigotripplanner.network.GetAutocompleteCityImpl;
+import com.kungfupandas.ixigotripplanner.network.NetworkUtils;
+import com.kungfupandas.ixigotripplanner.pojo.City;
 import com.kungfupandas.ixigotripplanner.pojo.NetworkResponse;
 import com.kungfupandas.ixigotripplanner.util.LocationUtil;
+
+import org.json.JSONException;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by tushar on 08/04/17.
@@ -21,7 +34,12 @@ import com.kungfupandas.ixigotripplanner.util.LocationUtil;
 
 public abstract class BaseActivity extends AppCompatActivity implements NetworkOperationListener, LocationUtil.LocationUtilCallback {
     private ProgressDialog mProgressDialog;
-    private LocationUtil mLocationUtil;
+    protected LocationUtil mLocationUtil;
+    protected City mCity;
+    protected CityListener mListener;
+    protected interface CityListener{
+        public void onCityGet(City city);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -91,8 +109,48 @@ public abstract class BaseActivity extends AppCompatActivity implements NetworkO
     }
 
     @Override
-    public void onGetLocation(Location location) {
+    public void onGetLocation(final Location location) {
+        AsyncTask asyncTask = new AsyncTask<Object, Object, City>() {
+            @Override
+            protected City doInBackground(Object... params) {
+                Geocoder geocoder = new Geocoder(BaseActivity.this, Locale.getDefault());
+                List<Address> addresses = null;
+                try {
+                    addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                String cityName = addresses.get(0).getLocality();
+                if(cityName.equalsIgnoreCase("Gurugram")){
+                    cityName = "Gurgaon";
+                }
+                GetAutocompleteCityImpl getAutocompleteCity = new GetAutocompleteCityImpl();
+                NetworkResponse response = null;
+                try {
+                    response = getAutocompleteCity.getData(AppConstants.ApiEndpoints.GET_AUTOCOMPLETE_CITY + cityName);
+                    List<City> cityList = NetworkUtils.parseCityResult(response.getData());
+                    return cityList.get(0);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
 
+            @Override
+            protected void onPostExecute(City city) {
+                mCity = city;
+                super.onPostExecute(city);
+                dismissDialog();
+                if(mListener!=null){
+                    mListener.onCityGet(city);
+                }
+            }
+        };
+        asyncTask.execute("");
     }
 
     @Override

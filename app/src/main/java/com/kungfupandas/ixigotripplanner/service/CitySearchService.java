@@ -89,6 +89,7 @@ public class CitySearchService extends Service implements FloatingView.FloatingW
     @Override
     public void onWindowDismissed() {
         FloatingWindowController.isCreatedOnce = false;
+        mFloatingWindowController.removeAlertWindow();
         stopSelf();
     }
 }
