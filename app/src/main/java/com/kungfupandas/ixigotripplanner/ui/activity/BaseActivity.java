@@ -3,6 +3,7 @@ package com.kungfupandas.ixigotripplanner.ui.activity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -12,18 +13,21 @@ import com.kungfupandas.ixigotripplanner.AppConstants;
 import com.kungfupandas.ixigotripplanner.listener.NetworkOperationListener;
 import com.kungfupandas.ixigotripplanner.network.AsyncManager;
 import com.kungfupandas.ixigotripplanner.pojo.NetworkResponse;
+import com.kungfupandas.ixigotripplanner.util.LocationUtil;
 
 /**
  * Created by tushar on 08/04/17.
  */
 
-public abstract class BaseActivity extends AppCompatActivity implements NetworkOperationListener {
+public abstract class BaseActivity extends AppCompatActivity implements NetworkOperationListener, LocationUtil.LocationUtilCallback {
     private ProgressDialog mProgressDialog;
+    private LocationUtil mLocationUtil;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutResId());
+        mLocationUtil = new LocationUtil(this,this);
     }
 
     public void showMessage(String message) {
@@ -84,5 +88,15 @@ public abstract class BaseActivity extends AppCompatActivity implements NetworkO
             }
             mProgressDialog = null;
         }
+    }
+
+    @Override
+    public void onGetLocation(Location location) {
+        
+    }
+
+    @Override
+    public void onNoLocation() {
+
     }
 }

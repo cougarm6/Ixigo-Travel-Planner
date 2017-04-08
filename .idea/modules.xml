@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/IxigoTripPlanner.iml" filepath="$PROJECT_DIR$/IxigoTripPlanner.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ixi.iml" filepath="$PROJECT_DIR$/ixi.iml" />
     </modules>
   </component>
 </project>

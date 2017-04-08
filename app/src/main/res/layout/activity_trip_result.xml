@@ -22,7 +22,7 @@
         android:id="@+id/tv_result_brief_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/result_result_margin"
+        android:layout_marginBottom="5dp"
         android:layout_marginLeft="@dimen/result_result_margin"
         android:layout_marginRight="@dimen/result_result_margin"
         android:textColor="@color/grey"

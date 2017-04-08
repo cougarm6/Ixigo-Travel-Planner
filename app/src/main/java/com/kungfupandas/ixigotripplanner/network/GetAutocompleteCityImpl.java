@@ -1,6 +1,5 @@
 package com.kungfupandas.ixigotripplanner.network;
 
-import com.kungfupandas.ixigotripplanner.AppConstants;
 import com.kungfupandas.ixigotripplanner.pojo.NetworkResponse;
 
 import org.json.JSONException;
