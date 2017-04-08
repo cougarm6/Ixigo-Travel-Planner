@@ -12,7 +12,7 @@ import com.google.gson.annotations.SerializedName;
 public class City implements Parcelable {
     @SerializedName("text")
     private String cityName;
-    @SerializedName("_id")
+    @SerializedName("xid")
     private String cityId;
     @SerializedName("url")
     private String url;

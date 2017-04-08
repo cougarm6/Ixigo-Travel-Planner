@@ -54,8 +54,10 @@ public class AsyncManager extends AsyncTask<Object, Object, NetworkResponse> {
         if (networkOperationListener != null) {
             Logger.info("servicebenchmark", networkOperationListener.getClass().getName() + " , time taken in ms: " + (System.currentTimeMillis() - startTime));
             if (e != null || !result.isSuccess()) {//background error call on BackGroundError
-                if (e == null)
+                if (e == null) {
                     e = new NetworkException(result.getReason(), result.getResponseCode());
+                    Logger.error("error",""+result.getReason());
+                }
                 networkOperationListener.onNetworkOperationError(e,
                         this.taskCode, this.params);
             } else {// no exception call onNetworkOperationSuccess

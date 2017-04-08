@@ -10,9 +10,17 @@
     <dimen name="home_location_box_margin">16dp</dimen>
     <dimen name="home_from_margin">16dp</dimen>
     <dimen name="text_subheading">14dp</dimen>
+    <dimen name="text_heading">18dp</dimen>
     <dimen name="home_subheading">24dp</dimen>
     <dimen name="home_form_padding">10dp</dimen>
     <dimen name="btn_padding">10dp</dimen>
     <dimen name="home_search_btn_margin">16dp</dimen>
     <dimen name="home_box_side_margin">16dp</dimen>
+    <dimen name="result_result_margin">16dp</dimen>
+    <dimen name="result_number_margin">10dp</dimen>
+    <dimen name="toolbar_heading">18sp</dimen>
+    <dimen name="route_list_card_margin">10dp</dimen>
+    <dimen name="card_view_internal_margin">10dp</dimen>
+    <dimen name="route_time_margin_top">10dp</dimen>
+    <dimen name="route_flight_margin_top">10dp</dimen>
 </resources>
