@@ -54,7 +54,10 @@ public class FloatingWindowMainView extends CardView {
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), TripResultActivity.class);
                 intent.putExtra(TripResultActivity.BUNDLE_KEY_DESTINATION_CITY,city);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 getContext().startActivity(intent);
+                FloatingWindowController.isCreatedOnce = false;
+                mFloatingWindowListener.onWindowDismissed();
             }
         });
     }

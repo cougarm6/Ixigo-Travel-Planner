@@ -42,7 +42,6 @@ public class TripResultActivity extends ToolbarActivity {
         super.onCreate(savedInstanceState);
         initData();
         initView();
-        fetchOriginToDestinationData();
     }
 
     private void initView() {
@@ -139,17 +138,34 @@ public class TripResultActivity extends ToolbarActivity {
         if (getIntent() != null && getIntent().getParcelableExtra(BUNDLE_KEY_DESTINATION_CITY) != null) {
             mDestinationCity = getIntent().getParcelableExtra(BUNDLE_KEY_DESTINATION_CITY);
             mOriginCity = getIntent().getParcelableExtra(BUNDLE_KEY_ORIGIN_CITY);
-            Logger.info("origin", "" + mOriginCity);
-            Logger.info("destination", "" + mDestinationCity);
+            if(mOriginCity!=null) {
+                Logger.info("origin", "" + mOriginCity);
+                Logger.info("destination", "" + mDestinationCity);
+                fetchOriginToDestinationData();
+            }
+            else if(mCity!=null){
+                mOriginCity = mCity;
+                fetchOriginToDestinationData();
+            }
+            else{
+                showDialog(this,"Fetching Location");
+
+                mListener = new CityListener() {
+                    @Override
+                    public void onCityGet(City city) {
+                        dismissDialog();
+                        if(city==null){
+                            onError("Not able to get your current Location!");
+                        }
+                        mOriginCity = city;
+                        fetchOriginToDestinationData();
+                    }
+                };
+            }
         } else {
             onError("Destination city not added!");
         }
-        if (mOriginCity == null) {
-            setLastKnownLocation(mOriginCity);
-        }
     }
 
-    private void setLastKnownLocation(City mOriginCity) {
 
-    }
 }
