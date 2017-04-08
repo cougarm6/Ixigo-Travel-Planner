@@ -29,7 +29,7 @@ public class TripResultActivity extends ToolbarActivity {
     private RecyclerView mFlightsRv;
     private Trip mTripDetails;
     private RoutesAdapter mAdapter;
-    private TextView mToandFromTv, mResultCountTv;
+    private TextView mToandFromTv, mResultCountTv, mSummaryTv;
 
     @Override
     protected int getLayoutResId() {
@@ -39,8 +39,8 @@ public class TripResultActivity extends ToolbarActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initView();
         initData();
+        initView();
         fetchOriginToDestinationData();
     }
 
@@ -53,6 +53,7 @@ public class TripResultActivity extends ToolbarActivity {
     private void initTripData() {
         mToandFromTv = (TextView) findViewById(R.id.tv_result_brief);
         mResultCountTv = (TextView) findViewById(R.id.tv_result_brief_count);
+        mSummaryTv = (TextView) findViewById(R.id.tv_summary);
     }
 
     private void initList() {
@@ -88,19 +89,30 @@ public class TripResultActivity extends ToolbarActivity {
             JSONObject root = new JSONObject(json);
             JSONObject data = root.getJSONObject("data");
             mTripDetails = new Gson().fromJson(data.toString(), Trip.class);
-            mAdapter = new RoutesAdapter(mTripDetails.getRoutes());
+            if(mTripDetails.getFastestRoute()!=null &&mTripDetails.getFastestRoute().getDurationPretty()!=null &&
+                    mTripDetails.getCheapestRoute()!=null && mTripDetails.getCheapestRoute().getDurationPretty()!=null) {
+                mAdapter = new RoutesAdapter(mTripDetails.getRoutes(), mTripDetails.getFastestRoute().getDurationPretty(), mTripDetails.getCheapestRoute().getDurationPretty());
+            }else{
+                mAdapter = new RoutesAdapter(mTripDetails.getRoutes(), "N/A", "N/A");
+            }
             mFlightsRv.setAdapter(mAdapter);
             setTripData();
         }catch (Exception e){onError("Error while parsing data!");}
     }
 
     private void setTripData() {
-        if (mTripDetails != null && mTripDetails.getRoutes() != null)
-            mResultCountTv.setText("Showing " + mTripDetails.getRoutes().size() + " routes");
-        if (mTripDetails != null && !TextUtils.isEmpty(mTripDetails.getOriginName())
-                && !TextUtils.isEmpty(mTripDetails.getOriginName())){
-            mToandFromTv.setText(mTripDetails.getOriginName()+" - "+mTripDetails.getDestinationName());
+        if(mTripDetails!=null) {
+            if (mTripDetails.getRoutes() != null)
+                mResultCountTv.setText("Showing " + mTripDetails.getRoutes().size() + " routes");
+            if (!TextUtils.isEmpty(mTripDetails.getOriginName())
+                    && !TextUtils.isEmpty(mTripDetails.getOriginName())) {
+                mToandFromTv.setText(mTripDetails.getOriginName() + " - " + mTripDetails.getDestinationName());
+            }
+            if(!TextUtils.isEmpty(mTripDetails.getDirectIndirectSentence())){
+                mSummaryTv.setText(mTripDetails.getDirectIndirectSentence());
+            }
         }
+
     }
 
     @Override

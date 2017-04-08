@@ -23,4 +23,5 @@
     <dimen name="card_view_internal_margin">10dp</dimen>
     <dimen name="route_time_margin_top">10dp</dimen>
     <dimen name="route_flight_margin_top">10dp</dimen>
+    <dimen name="route_list_card_margin_top">5dp</dimen>
 </resources>

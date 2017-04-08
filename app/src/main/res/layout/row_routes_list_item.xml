@@ -5,7 +5,10 @@
     xmlns:font="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/route_list_card_margin"
+    android:layout_marginLeft="@dimen/route_list_card_margin"
+    android:layout_marginRight="@dimen/route_list_card_margin"
+    android:layout_marginTop="@dimen/route_list_card_margin_top"
+    android:layout_marginBottom="@dimen/route_list_card_margin_top"
     android:background="@color/grey_light"
     android:elevation="10dp"
     card_view:cardCornerRadius="10dp">
@@ -73,6 +76,29 @@
                 android:textSize="@dimen/text_subheading"
                 android:textColor="@color/text_light"
                 font:fontName ="@string/font_light"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:id="@+id/iv_cheap"
+                android:layout_margin="5dp"
+                android:src="@drawable/cheapest"
+                android:visibility="gone"
+                />
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:id="@+id/iv_fastest"
+                android:layout_margin="5dp"
+                android:src="@drawable/fastest"
+                android:visibility="gone"
                 />
         </LinearLayout>
     </LinearLayout>
