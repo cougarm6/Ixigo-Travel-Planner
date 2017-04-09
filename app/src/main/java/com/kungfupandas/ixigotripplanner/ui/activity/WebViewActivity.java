@@ -28,7 +28,7 @@ public class WebViewActivity extends ToolbarActivity {
     }
 
     private void initView() {
-        setToolbarTitle(title);
+        setToolbarTitle("_"+title);
         WebView wv1 = (WebView) findViewById(R.id.webView);
         wv1.setWebViewClient(new WebViewClient());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -38,6 +38,7 @@ public class WebViewActivity extends ToolbarActivity {
         wv1.getSettings().setLoadsImagesAutomatically(true);
         wv1.getSettings().setJavaScriptEnabled(true);
         wv1.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+        Logger.error("webViewUrl",url);
         wv1.loadUrl(url);
         Toast.makeText(this, "Please wait while the page loads...", Toast.LENGTH_SHORT).show();
     }

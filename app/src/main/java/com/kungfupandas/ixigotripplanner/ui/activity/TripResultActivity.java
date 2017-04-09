@@ -7,7 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.RelativeLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -35,7 +35,7 @@ public class TripResultActivity extends ToolbarActivity {
     private RecyclerView mFlightsRv;
     private Trip mTripDetails;
     private RoutesAdapter mAdapter;
-    private TextView mToandFromTv, mResultCountTv, mSummaryTv, mHotelTv, mRecommendTv, mCarRentalsTv;
+    private TextView mToandFromTv, mResultCountTv, mSummaryTv;
     private String recommendUrl;
 
     @Override
@@ -60,7 +60,14 @@ public class TripResultActivity extends ToolbarActivity {
     }
 
     private void initCarRentals() {
-        mCarRentalsTv = (TextView) findViewById(R.id.tv_car);
+        TextView mCarRentalsTv = (TextView) findViewById(R.id.tv_car);
+        ImageView mCarRentalIv = (ImageView) findViewById(R.id.iv_car);
+        mCarRentalIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onCarRentalsCliced();
+            }
+        });
         mCarRentalsTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,12 +78,20 @@ public class TripResultActivity extends ToolbarActivity {
 
     private void onCarRentalsCliced() {
         Intent intent = new Intent(this, WebViewActivity.class);
-        intent.putExtra(WebViewActivity.KEY_TITLE, "Hotels in " + mTripDetails.getDestinationName());
+        intent.putExtra(WebViewActivity.KEY_TITLE, "Rentals in " + mTripDetails.getDestinationName());
         intent.putExtra(WebViewActivity.KEY_URL, "" + AppConstants.ApiEndpoints.ZOOMCAR_CAR_RENTAILS + mTripDetails.getDestinationName());
+        startActivity(intent);
     }
 
     private void initRecomend() {
-        mRecommendTv = (TextView) findViewById(R.id.tv_recommend);
+        TextView mRecommendTv = (TextView) findViewById(R.id.tv_recommend);
+        ImageView recommendIv = (ImageView) findViewById(R.id.iv_recommend);
+        recommendIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onRecommendCliced();
+            }
+        });
         mRecommendTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -88,15 +103,23 @@ public class TripResultActivity extends ToolbarActivity {
     private void onRecommendCliced() {
         if (!TextUtils.isEmpty(mDestinationCity.getUrl())) {
             Intent intent = new Intent(this, WebViewActivity.class);
-            intent.putExtra(WebViewActivity.KEY_TITLE, "" + mTripDetails.getDestinationName());
-            intent.putExtra(WebViewActivity.KEY_URL, "" + recommendUrl);
+            intent.putExtra(WebViewActivity.KEY_TITLE, mTripDetails.getDestinationName());
+            intent.putExtra(WebViewActivity.KEY_URL, "https://www.ixigo.com/travel-guide/" + mTripDetails.getDestinationName());
+            startActivity(intent);
         } else {
             showMessage("Recommendations not available!");
         }
     }
 
     private void initHotels() {
-        mHotelTv = (TextView) findViewById(R.id.tv_hotels);
+        TextView mHotelTv = (TextView) findViewById(R.id.tv_hotels);
+        ImageView mHotelIv = (ImageView) findViewById(R.id.iv_hotels);
+        mHotelIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onHotelsCliced();
+            }
+        });
         mHotelTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -109,6 +132,7 @@ public class TripResultActivity extends ToolbarActivity {
         Intent intent = new Intent(this, WebViewActivity.class);
         intent.putExtra(WebViewActivity.KEY_TITLE, "Hotels in " + mTripDetails.getDestinationName());
         intent.putExtra(WebViewActivity.KEY_URL, "" + AppConstants.ApiEndpoints.GO_IBIBO_HOTEL + mTripDetails.getDestinationName());
+        startActivity(intent);
     }
 
     private void initTripData() {
@@ -147,20 +171,11 @@ public class TripResultActivity extends ToolbarActivity {
             Logger.error("result", "" + result.getData());
             onRoutesDataLoaded(result.getData());
             if (mTripDetails.getDestination() != null) {
-//                getCityInsights();
             } else {
                 showMessage("Data not available!");
             }
         } else {
             onError("Error occurred while fetching data!");
-        }
-    }
-
-    private void getCityInsights() {
-        if (mTripDetails != null && mTripDetails.getDestination() != null && mTripDetails.getDestination().getCityId() != null) {
-//            String url = AppConstants.ApiEndpoints.getCityInsightsEndPoint(mTripDetails.getDestination().getCityId());
-//            Logger.error("url",url);
-//            executeNetworkOperation(AppConstants.NetworkTaskCodes.GET_CITY_INSIGHTS, url);
         }
     }
 
@@ -217,8 +232,8 @@ public class TripResultActivity extends ToolbarActivity {
             if (mTripDetails.getFastestRoute() != null && mTripDetails.getFastestRoute().getDurationPretty() != null &&
                     mTripDetails.getCheapestRoute() != null && mTripDetails.getCheapestRoute().getDurationPretty() != null) {
                 mAdapter = new RoutesAdapter(mTripDetails.getRoutes(),
-                        mTripDetails.getFastestRoute().getDurationPretty(),
-                        mTripDetails.getCheapestRoute().getDurationPretty(), this);
+                        mTripDetails.getOriginName(),
+                        mTripDetails.getDestinationName(), this);
             } else {
                 mAdapter = new RoutesAdapter(mTripDetails.getRoutes(), "N/A", "N/A", this);
             }

@@ -99,7 +99,6 @@
             android:layout_marginTop="@dimen/result_result_margin"
             android:textColor="@color/colorAccent"
             android:text="Need a place to stay?"
-            android:layout_marginBottom="@dimen/result_result_margin"
             android:textSize="@dimen/text_heading"
             font:fontName="@string/font_light" />
 
@@ -123,7 +122,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/result_result_margin"
                 android:layout_marginRight="@dimen/result_result_margin"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/result_result_margin"
                 android:textColor="@color/colorAccent"
                 android:text="Self Drive?"
                 android:layout_marginBottom="@dimen/result_result_margin"

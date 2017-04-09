@@ -5,6 +5,7 @@
     <string name="home_subheading">with love by _Ixigo</string>
     <string name="font_light">RobotoCondensed-Light.ttf</string>
     <string name="search">Search</string>
+    <string name="share">Share</string>
     <string-array name="india_top_places">
         <item>Agartala</item>
         <item>Agra</item>
