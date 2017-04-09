@@ -1,15 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    xmlns:font="http://schemas.android.com/apk/res-aut">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_timeline"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:clipToPadding="false"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-</RelativeLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_timeline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp" />
+
+        <com.kungfupandas.ixigotripplanner.ui.custom.FontButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rv_timeline"
+            android:layout_margin="@dimen/home_search_btn_margin"
+            android:layout_centerHorizontal="true"
+            android:padding="@dimen/btn_padding"
+            android:id="@+id/btn_share"
+            android:background="@color/colorAccent"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_subheading"
+            font:textFontName="@string/font_light"
+            android:text="@string/share"
+            />
+
+    </RelativeLayout>
+
+</android.support.v4.widget.NestedScrollView>

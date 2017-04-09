@@ -15,6 +15,7 @@ import com.kungfupandas.ixigotripplanner.pojo.Route;
 import com.kungfupandas.ixigotripplanner.ui.activity.RouteDetailActivity;
 
 import java.util.List;
+import java.util.TreeSet;
 
 /**
  * Created by tushar on 08/04/17.
@@ -22,8 +23,9 @@ import java.util.List;
 
 public class RoutesAdapter extends RecyclerView.Adapter<RoutesAdapter.ViewHolder> {
     private final Context mContext;
+    private final int fastestPos, cheapestPos;
     private List<Route> routeList;
-    private String mDurationFastest, mDurationCheapest;
+    private String from, to;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView mSummaryTv;
@@ -46,11 +48,29 @@ public class RoutesAdapter extends RecyclerView.Adapter<RoutesAdapter.ViewHolder
         }
     }
 
-    public RoutesAdapter(List<Route> routeList, String durationFastest, String durationCheapest, Context context) {
+    public RoutesAdapter(List<Route> routeList, String from, String to, Context context) {
         this.routeList = routeList;
-        this.mDurationCheapest = durationCheapest;
-        this.mDurationFastest = durationFastest;
+        this.from = from;
+        this.to = to;
         this.mContext = context;
+        this.fastestPos = getFasterstDuration();
+        this.cheapestPos = getCheapest();
+    }
+
+    private int getFasterstDuration() {
+        TreeSet<Integer> treeSet = new TreeSet();
+        for (Route route : routeList) {
+            treeSet.add(route.getTime());
+        }
+        return treeSet.first();
+    }
+
+    private int getCheapest() {
+        TreeSet<Integer> treeSet = new TreeSet();
+        for (Route route : routeList) {
+            treeSet.add(route.getPrice());
+        }
+        return treeSet.first();
     }
 
     @Override
@@ -70,6 +90,8 @@ public class RoutesAdapter extends RecyclerView.Adapter<RoutesAdapter.ViewHolder
             public void onClick(View view) {
                 Intent intent = new Intent(mContext, RouteDetailActivity.class);
                 intent.putExtra(RouteDetailActivity.BUNDLE_KEYS_ROUTE, route);
+                intent.putExtra(RouteDetailActivity.BUNDLE_KEYS_FROM, from);
+                intent.putExtra(RouteDetailActivity.BUNDLE_KEYS_TO, to);
                 mContext.startActivity(intent);
             }
         });
@@ -77,12 +99,12 @@ public class RoutesAdapter extends RecyclerView.Adapter<RoutesAdapter.ViewHolder
         holder.mSummaryTv.setText(route.getModeViaString());
         holder.mTimingTv.setText(route.getDurationPretty());
         holder.mModesTv.setText(route.getAllStepModes());
-        if (route.getDurationPretty().equalsIgnoreCase(mDurationCheapest)) {
+        if (position == cheapestPos) {
             holder.mCheapIv.setVisibility(View.VISIBLE);
         } else {
             holder.mCheapIv.setVisibility(View.GONE);
         }
-        if (route.getDurationPretty().equalsIgnoreCase(mDurationFastest)) {
+        if (position == fastestPos) {
             holder.mFastIv.setVisibility(View.VISIBLE);
         } else {
             holder.mFastIv.setVisibility(View.GONE);
