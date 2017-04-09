@@ -78,8 +78,8 @@ public class TripResultActivity extends ToolbarActivity {
 
     private void onCarRentalsCliced() {
         Intent intent = new Intent(this, WebViewActivity.class);
-        intent.putExtra(WebViewActivity.KEY_TITLE, "Rentals in " + mTripDetails.getDestinationName());
-        intent.putExtra(WebViewActivity.KEY_URL, "" + AppConstants.ApiEndpoints.ZOOMCAR_CAR_RENTAILS + mTripDetails.getDestinationName());
+        intent.putExtra(WebViewActivity.KEY_TITLE, "Rentals in " + mTripDetails.getOriginName());
+        intent.putExtra(WebViewActivity.KEY_URL, "" + AppConstants.ApiEndpoints.ZOOMCAR_CAR_RENTAILS + mTripDetails.getOriginName());
         startActivity(intent);
     }
 
