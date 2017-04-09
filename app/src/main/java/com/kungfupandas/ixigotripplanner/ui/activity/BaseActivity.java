@@ -155,6 +155,8 @@ public abstract class BaseActivity extends AppCompatActivity implements NetworkO
 
     @Override
     public void onNoLocation() {
-
+        if(mListener!=null){
+            mListener.onCityGet(null);
+        }
     }
 }

@@ -3,6 +3,8 @@ package com.kungfupandas.ixigotripplanner.service;
 import android.accessibilityservice.AccessibilityService;
 import android.accessibilityservice.AccessibilityServiceInfo;
 import android.content.Intent;
+import android.os.Build;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
@@ -52,9 +54,13 @@ public class GhostAccessibilityService extends AccessibilityService {
                 cityWord = city;
             }
         }
-        Intent searchCityIntent = new Intent(this,CitySearchService.class);
-        searchCityIntent.putExtra(AppConstants.IntentConfigs.WORDS_LIST,cityWord);
-        startService(searchCityIntent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (Settings.canDrawOverlays(this)) {
+                Intent searchCityIntent = new Intent(this,CitySearchService.class);
+                searchCityIntent.putExtra(AppConstants.IntentConfigs.WORDS_LIST,cityWord);
+                startService(searchCityIntent);
+            }
+        }
     }
 
 

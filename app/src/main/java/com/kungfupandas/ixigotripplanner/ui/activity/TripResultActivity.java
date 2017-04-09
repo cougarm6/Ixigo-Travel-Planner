@@ -7,7 +7,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -288,6 +287,7 @@ public class TripResultActivity extends ToolbarActivity {
                         dismissDialog();
                         if (city == null) {
                             onError("Not able to get your current Location!");
+                            return;
                         }
                         mOriginCity = city;
                         fetchOriginToDestinationData();
