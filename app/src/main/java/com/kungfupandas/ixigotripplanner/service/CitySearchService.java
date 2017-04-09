@@ -20,7 +20,6 @@ import com.kungfupandas.ixigotripplanner.ui.FloatingWindowController;
 
 import org.json.JSONException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,6 +35,7 @@ public class CitySearchService extends Service implements FloatingView.FloatingW
 
     private FloatingWindowController mFloatingWindowController;
     private Context mContext;
+    private String lastSearched="";
     private Handler mHandler = new Handler(Looper.getMainLooper()){
         @Override
         public void handleMessage(Message msg) {
@@ -43,6 +43,11 @@ public class CitySearchService extends Service implements FloatingView.FloatingW
             if(cityList!=null && cityList.size()>0 && mFloatingWindowController==null){
                 mFloatingWindowController = new FloatingWindowController();
                 mFloatingWindowController.createAlertWindow(mContext,cityList.get(0));
+                lastSearched = cityList.get(0).getCityName();
+            }else {
+                if(cityList!=null && cityList.size()>0 && cityList.get(0).getCityName()!=lastSearched) {
+                    mFloatingWindowController.updateCity(cityList.get(0));
+                }
             }
         }
     };
@@ -60,28 +65,33 @@ public class CitySearchService extends Service implements FloatingView.FloatingW
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         mContext = this;
-        if(mFloatingWindowController!=null){
+/*        if(mFloatingWindowController!=null){
+            mFloatingWindowController.
             return super.onStartCommand(intent, flags, startId);
         }
-        else if(!mFloatingWindowController.isCreatedOnce) {
+        else if(!mFloatingWindowController.isCreatedOnce) {*/
         final GetAutocompleteCityImpl getAutocompleteCity = new GetAutocompleteCityImpl();
-        ArrayList<String> words = intent.getStringArrayListExtra(AppConstants.IntentConfigs.WORDS_LIST);
-        for(final String word:words) {
-            Thread thread = new Thread(){
-                    @Override
-                    public void run() {
+        final String word = intent.getStringExtra(AppConstants.IntentConfigs.WORDS_LIST);
+        if(!lastSearched.equals(word)) {
+            Thread thread = new Thread() {
+                @Override
+                public void run() {
+                    try {
+                        NetworkResponse response = getAutocompleteCity.getData(AppConstants.ApiEndpoints.GET_AUTOCOMPLETE_CITY + word);
                         try {
-                            NetworkResponse response = getAutocompleteCity.getData(AppConstants.ApiEndpoints.GET_AUTOCOMPLETE_CITY + word);
-                            try {
-                                cityList = NetworkUtils.parseCityResult(response.getData());
-                                mHandler.sendEmptyMessage(1);
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                        }catch (Exception e){}
-                }};
-                thread.start();
+                            cityList = NetworkUtils.parseCityResult(response.getData());
+                            mHandler.sendEmptyMessage(1);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    } catch (Exception e) {
+                    }
+                }
+            };
+            thread.start();
         }
+        else{
+            mHandler.sendEmptyMessage(1);
         }
         return super.onStartCommand(intent, flags, startId);
     }

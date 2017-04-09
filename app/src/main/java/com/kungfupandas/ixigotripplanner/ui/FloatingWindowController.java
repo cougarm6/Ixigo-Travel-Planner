@@ -15,6 +15,7 @@ public class FloatingWindowController {
     private FloatingView mFLoatingView;
     FloatingWindowMainView mainView;
     public static boolean isCreatedOnce = false;
+    private City mCity;
 
     public void createAlertWindow(Context context, City city) {
         mContext = context;
@@ -23,12 +24,13 @@ public class FloatingWindowController {
             removeAlertWindow();
         }
         LayoutInflater inflater = (LayoutInflater)   mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        FloatingWindowMainView mainView = (FloatingWindowMainView) inflater.inflate(R.layout.trip_layout,null);
+        mainView = (FloatingWindowMainView) inflater.inflate(R.layout.trip_layout,null);
         mainView.setFloatingViewDismiss((FloatingView.FloatingWindowListener) context);
         mFLoatingView = new FloatingView(mContext, mainView);
         if (null != city) {
             mainView.init(city);
         }
+        mCity = city;
         animateHead();
     }
 
@@ -49,6 +51,11 @@ public class FloatingWindowController {
             mFLoatingView.removeView();
         }
         isCreatedOnce = false;
+    }
+
+    public void updateCity(City city){
+        mFLoatingView.animateFLoatingHead();
+        mainView.init(city);
     }
 
     public boolean isAlertWindowCreated(){

@@ -115,7 +115,7 @@ public class FloatingView {
                 PixelFormat.TRANSLUCENT);
         mExpandableParams.gravity = Gravity.TOP|Gravity.LEFT;
         mExpandableParams.x = mFLoaterMarginLeft;
-        mExpandableParams.y = mFLoaterMarginTop + mFLoaterDimen;
+        mExpandableParams.y = (int) (mFLoaterMarginTop + 1.5*mFLoaterDimen);
 
         mBackground = new FrameLayout(mContext);
         mBackgroundParams = new LayoutParams(

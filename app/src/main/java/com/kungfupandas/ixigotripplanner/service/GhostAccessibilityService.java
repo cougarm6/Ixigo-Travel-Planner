@@ -45,14 +45,15 @@ public class GhostAccessibilityService extends AccessibilityService {
 
     private void searchForCity() {
         String[] cityArray = getResources().getStringArray(R.array.india_top_places);
-        ArrayList<String> cityWords = new ArrayList<>();
-        for(String city:cityArray){
-            if(words.contains(city)){
-                cityWords.add(city);
+        List<String> cityArr = Arrays.asList(cityArray);
+        String cityWord="";
+        for(String city:words){
+            if(cityArr.contains(city)){
+                cityWord = city;
             }
         }
         Intent searchCityIntent = new Intent(this,CitySearchService.class);
-        searchCityIntent.putExtra(AppConstants.IntentConfigs.WORDS_LIST,cityWords);
+        searchCityIntent.putExtra(AppConstants.IntentConfigs.WORDS_LIST,cityWord);
         startService(searchCityIntent);
     }
 
