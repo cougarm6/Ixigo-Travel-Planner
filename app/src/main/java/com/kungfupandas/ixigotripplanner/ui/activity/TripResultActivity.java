@@ -97,13 +97,7 @@ public class TripResultActivity extends ToolbarActivity {
 
     private void initHotels() {
         mHotelTv = (TextView) findViewById(R.id.tv_hotels);
-        RelativeLayout extras = (RelativeLayout) findViewById(R.id.rl_extras);
         mHotelTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onHotelsCliced();
-            }
-        });  extras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 onHotelsCliced();

@@ -89,7 +89,7 @@
 
             <com.kungfupandas.ixigotripplanner.ui.custom.FontTextView
             android:id="@+id/tv_hotels"
-            android:layout_below="@+id/seperator_hotel"
+            android:layout_below="@+id/tv_recommend"
             android:layout_width="wrap_content"
             android:layout_toLeftOf="@+id/iv_hotels"
             android:layout_alignParentLeft="true"
