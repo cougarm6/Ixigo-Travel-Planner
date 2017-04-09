@@ -16,6 +16,8 @@ public class NetworkServiceFactory {
                 return new GetAutocompleteCityImpl();
             case AppConstants.NetworkTaskCodes.GET_A_TO_B_MODES:
                 return new GetAToBModesImpl();
+            case AppConstants.NetworkTaskCodes.GET_CITY_INSIGHTS:
+                return new GetCityInsightsImpl();
             default:
                 return null;
         }

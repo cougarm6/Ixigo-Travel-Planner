@@ -29,10 +29,10 @@ public class NetworkUtils {
             if (response.isSuccessful()) {
                 String responseString = response.body().string();
                 nwResponse.setData(responseString);
-                Logger.info("networkResult",""+responseString);
+                Logger.info("networkResult", "" + responseString);
                 response.body().close();
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             nwResponse.setSuccess(false);
             nwResponse.setReason(e.getMessage());
             nwResponse.setResponseCode(1);
@@ -66,11 +66,12 @@ public class NetworkUtils {
         JSONArray root = new JSONArray(data);
         Gson gson = new Gson();
         List<City> cityList = new ArrayList<>();
-        for(int i = 0 ; i < root.length(); i++){
+        for (int i = 0; i < root.length(); i++) {
             String json = root.getJSONObject(i).toString();
             City city = gson.fromJson(json, City.class);
             cityList.add(city);
         }
         return cityList;
     }
+
 }

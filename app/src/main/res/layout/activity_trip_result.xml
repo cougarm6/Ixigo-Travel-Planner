@@ -54,8 +54,9 @@
             android:overScrollMode="never" />
 
         <RelativeLayout
+            android:id="@+id/rl_extras"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:background="@color/white"
             >
@@ -87,20 +88,20 @@
                 />
 
             <com.kungfupandas.ixigotripplanner.ui.custom.FontTextView
-                android:id="@+id/tv_hotels"
-                android:layout_below="@+id/seperator_hotel"
-                android:layout_width="wrap_content"
-                android:layout_toLeftOf="@+id/iv_hotels"
-                android:layout_alignParentLeft="true"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/result_result_margin"
-                android:layout_marginRight="@dimen/result_result_margin"
-                android:layout_marginTop="@dimen/result_result_margin"
-                android:textColor="@color/colorAccent"
-                android:text="Need a place to stay?"
-                android:layout_marginBottom="@dimen/result_result_margin"
-                android:textSize="@dimen/text_heading"
-                font:fontName="@string/font_light" />
+            android:id="@+id/tv_hotels"
+            android:layout_below="@+id/seperator_hotel"
+            android:layout_width="wrap_content"
+            android:layout_toLeftOf="@+id/iv_hotels"
+            android:layout_alignParentLeft="true"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/result_result_margin"
+            android:layout_marginRight="@dimen/result_result_margin"
+            android:layout_marginTop="@dimen/result_result_margin"
+            android:textColor="@color/colorAccent"
+            android:text="Need a place to stay?"
+            android:layout_marginBottom="@dimen/result_result_margin"
+            android:textSize="@dimen/text_heading"
+            font:fontName="@string/font_light" />
 
             <ImageView
                 android:layout_width="24dp"
@@ -113,12 +114,31 @@
                 android:layout_alignParentRight="true"
                 />
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:id="@+id/seperator_hotel"
-                android:background="@drawable/dotted_line_orange"
-                android:layout_below="@+id/iv_recommend"
+            <com.kungfupandas.ixigotripplanner.ui.custom.FontTextView
+                android:id="@+id/tv_car"
+                android:layout_below="@+id/tv_hotels"
+                android:layout_width="wrap_content"
+                android:layout_toLeftOf="@+id/iv_car"
+                android:layout_alignParentLeft="true"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/result_result_margin"
+                android:layout_marginRight="@dimen/result_result_margin"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorAccent"
+                android:text="Self Drive?"
+                android:layout_marginBottom="@dimen/result_result_margin"
+                android:textSize="@dimen/text_heading"
+                font:fontName="@string/font_light" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:id="@+id/iv_car"
+                android:layout_marginRight="@dimen/result_result_margin"
+                android:scaleType="fitXY"
+                android:src="@drawable/arrow"
+                android:layout_alignTop="@+id/tv_car"
+                android:layout_alignParentRight="true"
                 />
 
 

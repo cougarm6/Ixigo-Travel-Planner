@@ -3,7 +3,6 @@ package com.kungfupandas.ixigotripplanner.pojo;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,6 +23,15 @@ public class Trip implements Parcelable {
     private List<Route> routes;
     private Route fastestRoute;
     private Route cheapestRoute;
+    private City destination;
+
+    public City getDestination() {
+        return destination;
+    }
+
+    public void setDestination(City destination) {
+        this.destination = destination;
+    }
 
     public Route getFastestRoute() {
         return fastestRoute;
@@ -130,6 +138,9 @@ public class Trip implements Parcelable {
     }
 
 
+    public Trip() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -147,12 +158,10 @@ public class Trip implements Parcelable {
         dest.writeByte(this.direct ? (byte) 1 : (byte) 0);
         dest.writeString(this.directIndirectSentence);
         dest.writeString(this.distance);
-        dest.writeList(this.routes);
+        dest.writeTypedList(this.routes);
         dest.writeParcelable(this.fastestRoute, flags);
         dest.writeParcelable(this.cheapestRoute, flags);
-    }
-
-    public Trip() {
+        dest.writeParcelable(this.destination, flags);
     }
 
     protected Trip(Parcel in) {
@@ -166,13 +175,13 @@ public class Trip implements Parcelable {
         this.direct = in.readByte() != 0;
         this.directIndirectSentence = in.readString();
         this.distance = in.readString();
-        this.routes = new ArrayList<Route>();
-        in.readList(this.routes, Route.class.getClassLoader());
+        this.routes = in.createTypedArrayList(Route.CREATOR);
         this.fastestRoute = in.readParcelable(Route.class.getClassLoader());
         this.cheapestRoute = in.readParcelable(Route.class.getClassLoader());
+        this.destination = in.readParcelable(City.class.getClassLoader());
     }
 
-    public static final Parcelable.Creator<Trip> CREATOR = new Parcelable.Creator<Trip>() {
+    public static final Creator<Trip> CREATOR = new Creator<Trip>() {
         @Override
         public Trip createFromParcel(Parcel source) {
             return new Trip(source);
